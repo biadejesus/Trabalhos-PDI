@@ -10,5 +10,6 @@ cv.imwrite('teste.png', inicio)
 for i in range(256):
     inicio[i,:,0] = i
     inicio[:,-i,2] = i
+    
 
 cv.imwrite('teste2.png', inicio)
