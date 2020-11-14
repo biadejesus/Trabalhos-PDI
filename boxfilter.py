@@ -14,8 +14,19 @@ def openImg(filename):
 imagem = openImg('kakashi.jpg')
 # aux =  imagem.reshape(2,2)
 altura, largura = imagem.shape[0], imagem.shape[1]
-f1 = 8
-f2 = 8
-saida = np.vstack([np.c_[imagem[:altura, :largura ].reshape( altura//f1, f1, largura//f2, f2).mean(axis=(1, 3)), imagem[:altura, largura:].reshape(altura//f1, f1, -1).mean(axis=1)], np.c_[imagem[altura:, :largura ].reshape(-1, largura//f2, f2).mean(axis=2), imagem[altura:, largura:]]])
-cv.imwrite('saida.png', saida)
+taxa = 8
+taxa2 = 8
+print("Fazendo box filter....")
+boxfilter = np.vstack([np.c_[imagem[:altura, :largura ].reshape( altura//taxa, taxa, largura//taxa2, taxa2).mean(axis=(1, 3)), imagem[:altura, largura:].reshape(altura//taxa, taxa, -1).mean(axis=1)], np.c_[imagem[altura:, :largura ].reshape(-1, largura//taxa2, taxa2).mean(axis=2), imagem[altura:, largura:]]])
+
+downsampling= imagem[::taxa,::taxa2]
+zoombox = (np.repeat((np.repeat(boxfilter,taxa,axis=0)),taxa2,axis=1))
+zoomdown = (np.repeat((np.repeat(downsampling,taxa,axis=0)),taxa2,axis=1))
+
+print(imagem)
+print("Gerando imagens....")
+cv.imwrite('boxfilter.png', boxfilter)
 cv.imwrite('img.png', imagem)
+cv.imwrite('downsampling.png', downsampling)
+cv.imwrite('zommboxfilter.png', zoombox)
+cv.imwrite('zommdown.png', zoomdown)
