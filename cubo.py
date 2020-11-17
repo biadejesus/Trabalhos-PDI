@@ -1,15 +1,58 @@
 import numpy as np
 import cv2 as cv
+import sys 
+import getopt 
 
-faces = {1:((1,0,1),(1,0,0),(1,1,0),(1,1,1)), 2:((1,1,1),(1,1,0),(0,1,0),(0,1,1)), 3:((1,0,1),(1,1,1),(0,1,1),(0,0,1)) , 4:((0,0,1),(0,1,1),(0,1,0),(0,0,0)) , 5:((1,0,1),(0,0,1),(0,0,0),(1,0,0)), 6:((1,0,0),(1,1,0),(0,1,0),(0,0,0))}
-
-inicio = np.zeros((256, 256, 3), dtype=np.uint8) #pra gerra imagem do tipo certo
-print(inicio)
-cv.imwrite('teste.png', inicio)
-
-for i in range(256):
-    inicio[i,:,0] = i
-    inicio[:,-i,2] = i
+argv = sys.argv[1:] 
+  
+try: 
+    opts, args = getopt.getopt(argv, "f:v:") 
     
+except: 
+    print("Error") 
 
-cv.imwrite('teste2.png', inicio)
+for opt, arg in opts: 
+    if opt in ['-f']: 
+        face = arg 
+    elif opt in ['-v']: 
+        valor = arg
+
+if int(valor) < 0 or int(valor) > 255:
+    print("Insira um valor válido!") 
+    sys.exit()    
+
+if face == "1":
+    cima = np.linspace([255,0,255], [255, 255, 255], 255)
+    baixo = np.linspace([255,0,0], [255, 255, 0], 255)
+    cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
+    cubo[:,:,0] = 255 - int(valor)
+elif face == "2":
+    cima = np.linspace([0,0,255], [255, 0, 255], 255)
+    baixo = np.linspace([0,0,0], [255, 0, 0], 255)
+    cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
+    cubo[:,:,1] = 255 - int(valor)
+elif face == "3":
+    cima = np.linspace([255,255,255], [0, 255, 255], 255)
+    baixo = np.linspace([255,255,0], [0, 255, 0], 255)
+    cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
+    cubo[:,:,1] = 255 - int(valor)
+elif face == "4":
+    cima = np.linspace([0,255,255], [0, 0, 255], 255)
+    baixo = np.linspace([0,255,0], [0, 0, 0], 255)
+    cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
+    cubo[:,:,0] = 255 - int(valor)
+elif face == "5":
+    cima = np.linspace([0,0,255], [0, 255, 255], 255)
+    baixo = np.linspace([255,0,255], [255, 255, 255], 255)
+    cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
+    cubo[:,:,0] = 255 - int(valor)
+elif face == "6":
+    cima = np.linspace([0,0,0], [0, 255, 0], 255)
+    baixo = np.linspace([255,0,0], [255, 255, 0], 255)
+    cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
+    cubo[:,:,2] = 255 - int(valor)
+else:
+    print("Insira uma face válida!")
+    sys.exit()
+
+cv.imwrite('resultadoq.png', cubo)
