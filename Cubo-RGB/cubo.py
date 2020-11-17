@@ -15,9 +15,9 @@ for opt, arg in opts:
     if opt in ['-f']: 
         face = arg 
     elif opt in ['-v']: 
-        valor = arg
+        valor = int(arg)
 
-if int(valor) < 0 or int(valor) > 255:
+if valor < 0 or valor > 255:
     print("Insira um valor válido!") 
     sys.exit()    
 
@@ -25,34 +25,34 @@ if face == "1":
     cima = np.linspace([255,0,255], [255, 255, 255], 255)
     baixo = np.linspace([255,0,0], [255, 255, 0], 255)
     cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
-    cubo[:,:,0] = 255 - int(valor)
+    cubo[:,:,0] = 255 - valor
 elif face == "2":
     cima = np.linspace([0,0,255], [255, 0, 255], 255)
     baixo = np.linspace([0,0,0], [255, 0, 0], 255)
     cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
-    cubo[:,:,1] = 255 - int(valor)
+    cubo[:,:,1] = 255 - valor
 elif face == "3":
     cima = np.linspace([255,255,255], [0, 255, 255], 255)
     baixo = np.linspace([255,255,0], [0, 255, 0], 255)
     cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
-    cubo[:,:,1] = 255 - int(valor)
+    cubo[:,:,1] = 255 - valor
 elif face == "4":
     cima = np.linspace([0,255,255], [0, 0, 255], 255)
     baixo = np.linspace([0,255,0], [0, 0, 0], 255)
     cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
-    cubo[:,:,0] = 255 - int(valor)
+    cubo[:,:,0] = 255 - valor
 elif face == "5":
     cima = np.linspace([0,0,255], [0, 255, 255], 255)
     baixo = np.linspace([255,0,255], [255, 255, 255], 255)
     cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
-    cubo[:,:,0] = 255 - int(valor)
+    cubo[:,:,0] = 255 - valor
 elif face == "6":
     cima = np.linspace([0,0,0], [0, 255, 0], 255)
     baixo = np.linspace([255,0,0], [255, 255, 0], 255)
     cubo = np.linspace(cima, baixo, 255).astype(np.uint8)
-    cubo[:,:,2] = 255 - int(valor)
+    cubo[:,:,2] = 255 - valor
 else:
     print("Insira uma face válida!")
     sys.exit()
 
-cv.imwrite('resultadoq.png', cubo)
+cv.imwrite('resultado.png', cubo)
